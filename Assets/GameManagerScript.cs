@@ -4,32 +4,64 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
-    //配列の宣言
     int[] map;
+    void PrintArray()
+    {
+        string debugText = "";
+        for (int i = 0; i < map.Length; i++)
+        {
+            debugText += map[i].ToString() + ",";
+        }
+        Debug.Log(debugText);
+    }
+    int GetPlayerIndex()
+    {
+        for (int i = 0; i < map.Length; i++)
+        {
+            if (map[i] == 1)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    bool MoveNumber(int number, int moveFrom, int moveTo)
+    {
+        if (moveTo < 0 || moveTo >= map.Length) 
+            if (moveFrom<0||moveTo>=map.Length)
+            {
+              return false;
+            }
+        }
+
+        map[moveTo] = number;
+        map[moveFrom] = 0;
+        return true;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        map = new int[] { 0, 0, 0, 1, 0, 0, 0, 0, 0 };
+        PrintArray();
 
-        //変更確認したいときはCTRLキー+Sキー
 
-        //デバックログの出力
-        //Debug.Log("Hello World");
-
-        map = new int[] { 0, 0, 0, 1, 0, 0, 0, 0, 0, };
-
-        string debugText = "";
-
-        for(int i=0;i<map.Length;i++)
-        {
-            debugText += map[i].ToString()+",";
-        }
-        Debug.Log(debugText);
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            int playerIndex = GetPlayerIndex();
+
+        MoveNumber(1, playerIndex, playerIndex + 1);
+
+
+            PrintArray();
+        }
     }
 }
