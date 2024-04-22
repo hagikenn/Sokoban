@@ -4,8 +4,62 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
-    int[] map;
-    void PrintArray()
+    public GameObject playerPrefab;
+
+    int[,] map;
+    GameObject[,] field;
+
+      // Start is called before the first frame update
+    void Start()
+    {
+       /* GameObject instance = Instantiate(
+            playerPrefab,
+            new Vector3(0, 0, 0),
+            Quaternion.identity);*/
+
+        map = new int[,]
+        {
+        {0,0,0,0,0},
+        {0,0,1,0,0},
+        {0,0,0,0,0}
+        };
+
+        field = new GameObject[
+            map.GetLength(0),
+            map.GetLength(1)
+            ];
+
+        string debugText="";
+        for(int y = 0; y < map.GetLength(0); y++)
+        {
+            for(int x = 0; x < map.GetLength(1); x++)
+            {
+                if (map[y,x] == 1)
+                {
+                    field[y,x] = Instantiate(
+                        playerPrefab,
+                        new Vector3(x,map.GetLength(0)-1-y,0.0f),
+                        Quaternion.identity
+                        );
+                }
+               /* else
+                {
+                    GameObject instance = Instantiate(
+                       playerPrefab,
+                       new Vector3(x, map.GetLength(0) - 1 - y, 0.0f),
+                       Quaternion.identity
+                       );
+                }*/
+            }
+           // debugText += "\n";
+        }
+        //Debug.Log(debugText);
+       // PrintArray();
+
+
+    }
+
+   /* void PrintArray()
     {
         string debugText = "";
         for (int i = 0; i < map.Length; i++)
@@ -13,44 +67,40 @@ public class GameManagerScript : MonoBehaviour
             debugText += map[i].ToString() + ",";
         }
         Debug.Log(debugText);
-    }
-    int GetPlayerIndex()
+    }*/
+   
+    /*
+    private Vector2Int GetPlayerIndex()
     {
-        for (int i = 0; i < map.Length; i++)
+        for (int y = 0; i < map.Length; i++)
         {
             if (map[i] == 1)
             {
                 return i;
             }
         }
-        return -1;
+        return new Vector2Int(-1,-1);
     }
-
-    bool MoveNumber(int number, int moveFrom, int moveTo)
+    
+    bool MoveNumber(string objN, int moveFrom, int moveTo)
     {
-        if (moveTo < 0 || moveTo >= map.Length) 
-            if (moveFrom<0||moveTo>=map.Length)
-            {
-              return false;
-            }
-        }
+        if (moveTo < 0 || moveTo >= map.Length)
 
+            return false;
+    }
+    int velocity = moveTo - moveFrom;
+
+    bool success = MoveNumber(2, moveTo, moveTo + velocity);
+
+    if(!success){return false;}
+        {
         map[moveTo] = number;
         map[moveFrom] = 0;
         return true;
-    }
+}
+    }*/
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        map = new int[] { 0, 0, 0, 1, 0, 0, 0, 0, 0 };
-        PrintArray();
-
-
-    }
-
-
-
+/*
     // Update is called once per frame
     void Update()
     {
@@ -63,5 +113,5 @@ public class GameManagerScript : MonoBehaviour
 
             PrintArray();
         }
-    }
+    }*/
 }
